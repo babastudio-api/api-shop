@@ -5,7 +5,8 @@ const cors = require('cors')
 const app = express()
 
 //connection mongodb
-mongoose.connect('mongodb://localhost/api_shop')
+let db = "mongodb+srv://babastudio:b4b4studio2019@cluster0-tujzd.mongodb.net/api_shop?retryWrites=true&w=majority"
+mongoose.connect(db)
   .then(db => console.log('db connected'))
   .catch(err => console.log(err))
 
