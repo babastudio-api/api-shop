@@ -28,8 +28,10 @@ exports.addToCart = async (req,res) => {
 		res.send(JSON.stringify({ "status" : 200, "error" : null, "response" : "Success add to cart"}))
 	}else{
 		const dataCart = await Cart.find({ userCart : userCart, productCart : productCart }).lean()
-		dataCart.qtyCart = Number.parseInt(dataCart.qtyCart) + qty
-		const updateCart = await Cart.updateOne({_id : dataCart._id}, dataCart)
+		dataCart.forEach(async row => {
+			const newQty = Number.parseInt(row.qtyCart) + qty
+			const updateCart = await Cart.updateOne({_id : row._id}, { qtyCart : newQty })
+		})
 		res.send(JSON.stringify({ "status" : 200, "error" : null, "response" : "Success add to cart"}))
 	}
 }
